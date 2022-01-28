@@ -1,0 +1,43 @@
+<div class="centered-content">
+    <div class="ticket-manager-container">
+        <div class="sidebar has-background-white">
+            <h1 class="title has-text-primary">
+                Menu
+            </h1>
+
+            <div class="list-menu">
+                <a class="list-menu-item" routerLink="/">
+                    <p>Main Page</p>
+                </a>
+            </div>
+
+            <button class="button is-primary" routerLink="/" (click)="showNewTicketInfo()">+ New Ticket</button>
+
+        </div>
+
+    <div class="ticket-list-container has-background-light">
+        <h1 class="title has-text-primary">
+            List of all Tickets
+        </h1>
+            <div class="ticket" *ngFor="let lists of list; let i = index">
+                <label class="form-label" for="email">Email:</label><br>
+                <p class="output">{{lists.email}}</p><br>
+
+                <label class="form-label" for="subject">Subject: </label><br>
+                <p class="output">{{lists.subject}}</p><br>
+
+                <label class="form-label" for="description">Description: </label><br>
+                <p class="output">{{lists.description}}</p><br>
+
+                <label class="form-label" for="description">Attachment: </label><br>
+                <a class="output" href="http://localhost:3000/{{lists.image}}">{{lists.image}}</a><br>
+
+                <div class="buttons is-right">
+                    <button class="button is-danger" (click)="deleteTicket(lists._id,i)">-</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

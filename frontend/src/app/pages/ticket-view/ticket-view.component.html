@@ -1,0 +1,68 @@
+<div class="centered-content">
+    <div class="ticket-manager-container">
+        <div class="sidebar has-background-white">
+            <h1 class="title has-text-primary">
+                Menu
+            </h1>
+
+            <div class="list-menu">
+                <a class="list-menu-item"  routerLink="ticketlist">
+                    <p>Ticketlist</p>
+                </a>
+            </div>
+
+            <button class="button is-primary">+ New Ticket</button>
+
+        </div>
+
+        <div class="ticket-list-container has-background-light">
+            <h1 class="title has-text-primary">
+                Create Ticket
+            </h1>
+            <form #ticketForm="ngForm">
+                <div class="ticket">
+                    <label class="form-label" for="email">Email:</label><br>
+                    <input 
+                    type="text" 
+                    id="email" 
+                    class="form-input" 
+                    required 
+                    [(ngModel)]="model.email" 
+                    name="email" 
+                    pattern="[^ @]*@[^ @]*"><br>
+              
+                    <label class="form-label" for="subject">Subject: </label><br>
+                    <input 
+                    #ticketTitleInput 
+                    class="form-input" 
+                    type="text" 
+                    id="subject" 
+                    required 
+                    [(ngModel)]="model.subject" 
+                    name="subject"><br>
+              
+                    <label class="form-label" for="description">Description: </label><br>
+                    <textarea 
+                    rows="15" 
+                    cols="60" 
+                    type="text" 
+                    id="description" 
+                    class="form-input" 
+                    required 
+                    [(ngModel)]="model.description" 
+                    name="description">
+                    </textarea><br>
+                    
+                    <div class="appendix">
+                        <label class="form-label" for="image">Attachments: </label><br>
+                        <input type="file" id="image" name="image" class="form-input" (change)="selectedImage($event)"><br>
+                    </div>
+                   
+                    <div class="buttons is-right">
+                      <button class="button is-primary has-text-white" type="submit" [disabled]="!ticketForm.form.valid" (click)="sendUpload(); resetTicket()">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
