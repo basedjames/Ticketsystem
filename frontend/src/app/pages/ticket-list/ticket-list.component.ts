@@ -1,3 +1,4 @@
+// MODULES
 import { Component, OnInit } from '@angular/core';
 import { Ticket } from 'src/app/Ticket';
 import { HttpClient } from '@angular/common/http';
@@ -10,8 +11,18 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TicketListComponent implements OnInit {
 
+// CONSTRUCTOR FOT THE MODULES AND INIT FOR THE LIST
+  constructor(
+    private HttpClient: HttpClient,
+    private toastr: ToastrService,
+  ) 
+  { 
+    this.list = [];
+  };
+// VARIABLES 
   list: Ticket[];
 
+// GET THE TICKET LIST FROM THE BACKEND (GET REQUEST)
   getList() {
     this.HttpClient.get<any>('http://localhost:3000/ticket/ticketlist').subscribe(
       response => {
@@ -19,9 +30,9 @@ export class TicketListComponent implements OnInit {
         console.log(response);
       }
     );
-  }
+  };
 
-
+// DELELTE THE CHOSEN TICKET (DELETE REQUEST)
   deleteTicket(_id: any, index:any) {
     this.HttpClient.delete<any>(`http://localhost:3000/ticket/ticketlist/${_id}`, ).subscribe(
       response => {
@@ -32,20 +43,13 @@ export class TicketListComponent implements OnInit {
     )
   };
 
+// TOASTIFY FOR THE "NEW TICKET" BUTTON
   showNewTicketInfo() {
     this.toastr.info('New Ticket');
   }
 
-  constructor(
-    private HttpClient: HttpClient,
-    private toastr: ToastrService,
-  ) 
-  { 
-    this.list = [];
-  }
-
   ngOnInit(): void {
     this.getList();
-  }
+  };
 
 }

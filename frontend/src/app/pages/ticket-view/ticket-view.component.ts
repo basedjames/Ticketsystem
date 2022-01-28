@@ -1,4 +1,4 @@
-//MODULES
+// MODULES
 import { Component, OnInit } from '@angular/core';
 import { Ticket } from 'src/app/Ticket';
 import { ToastrService } from 'ngx-toastr';
@@ -11,16 +11,16 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TicketViewComponent implements OnInit {
 
-  image;
-  
   constructor(
     private toastr: ToastrService,
     private http: HttpClient
   ) { }
 
-
+// VARIABLES
+  image;
   model = new Ticket();
   
+// SELECT ATTACHMENT 
   selectedImage(event) {
     if (event?.target.files.length > 0) {
       const file = event.target.files[0];
@@ -28,11 +28,13 @@ export class TicketViewComponent implements OnInit {
     };
   };
 
+// RESET TICKET AFTER CREATE
   resetTicket() {
     this.model = new Ticket();
 
-  }
+  };
 
+// SEND THE FORMDATA TO THE BACKEND (POST REQUEST)
   sendUpload() {
     const formData = new FormData();
     formData.append('email', this.model.email);
@@ -54,6 +56,6 @@ export class TicketViewComponent implements OnInit {
   };
 
   ngOnInit(): void {
-  }
+  };
 
 }

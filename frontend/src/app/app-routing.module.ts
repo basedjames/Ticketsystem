@@ -1,8 +1,8 @@
-//MODULES
+// MODULES
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-//COMPONENTS
+// COMPONENTS
 import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
 import { TicketViewComponent } from './pages/ticket-view/ticket-view.component';
 

@@ -1,3 +1,4 @@
+// MODEL FOR THE FORMDATA TO SEND/RECEIVE THE TICKET
 export class Ticket {
 
     constructor(
@@ -8,4 +9,4 @@ export class Ticket {
       public image: string = ''
     ) {  }
   
-  }
+  };
