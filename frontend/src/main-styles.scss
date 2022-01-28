@@ -1,0 +1,42 @@
+// THIS IS WHERE WE PUT GLOBAL STYLES AND CHANGE VARIABLE VALUES
+
+// IMPORT FONTS (LATO AND NUNITO)
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Nunito:wght@400;700&display=swap');
+
+// IMPORT TOASTR STYLESHEET
+@import '~ngx-toastr/toastr';
+
+$turquoise: #44ddd0;
+$light-green: #45f69e;
+$green: #27d7a1;
+$dark-green: rgb(0, 100, 80);
+
+$light: #f8f8f8;
+
+// UPDATE BULMA GLOBAL VARIABLES
+$family-sans-serif: "Nunito", sans-serif;
+$primary: $green;
+$link: $light-green;
+
+// UPDATE SOME OF BULMA COMPONENT VARIABLES
+$control-border-width: 2px;
+$input-border-color: transparent;
+$input-shadow: none;
+
+// SET CUSTOM GLOBAL STYLES (APPLIED ON WHOLE APP)
+html {
+    background: linear-gradient(to right top, $turquoise, $green);
+}
+
+html, body {
+    height: 100%;
+}
+
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
