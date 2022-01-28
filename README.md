@@ -5,7 +5,7 @@ First install a MongoDB with Port 27017
 
 Backend start: 
 - npm install 
-- nodemon app.js
+- npm start
 
 Frontend start:
 - npm install 
