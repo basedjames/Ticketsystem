@@ -1,7 +1,8 @@
 # Ticketsystem
-Vocational school project Ticketsystem with Express and Angular
+Vocational school project:
+Ticketsystem with Node.js Express and Angular
 
-First install a MongoDB with Port 27017
+first install a MongoDB with Port 27017
 
 Backend start: 
 - npm install 
