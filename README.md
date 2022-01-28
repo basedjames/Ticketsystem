@@ -1,5 +1,5 @@
 # Ticketsystem
-LF9 Ticketsystem with Express and Angular
+Vocational school project Ticketsystem with Express and Angular
 
 First install a MongoDB with Port 27017
 
