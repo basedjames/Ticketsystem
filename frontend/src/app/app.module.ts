@@ -11,12 +11,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TicketViewComponent } from './pages/ticket-view/ticket-view.component';
 import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TicketViewComponent,
-    TicketListComponent
+    TicketListComponent,
+    LoginPageComponent
 
   ],
   imports: [
