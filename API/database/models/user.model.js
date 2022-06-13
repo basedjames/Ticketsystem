@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const bcrypt = require('bcrypt');
 
 
 // JWT Secret
@@ -33,7 +32,7 @@ const UserSchema = new mongoose.Schema({
     }]
 });
 
-
+/* 
 // *** Instance methods ***
 
 UserSchema.methods.toJSON = function () {
@@ -86,10 +85,11 @@ UserSchema.methods.createSession = function () {
         return Promise.reject('Failed to save session to database.\n' + e);
     })
 }
+*/
 
 
 
-/* MODEL METHODS (static methods) */
+/* MODEL METHODS (static methods) 
 
 UserSchema.statics.getJWTSecret = () => {
     return jwtSecret;
@@ -138,9 +138,10 @@ UserSchema.statics.hasRefreshTokenExpired = (expiresAt) => {
         return true;
     }
 }
+*/
 
 
-/* MIDDLEWARE */
+/* MIDDLEWARE 
 // Before a user document is saved, this code runs
 UserSchema.pre('save', function (next) {
     let user = this;
@@ -160,9 +161,10 @@ UserSchema.pre('save', function (next) {
         next();
     }
 });
+*/
 
 
-/* HELPER METHODS */
+/* HELPER METHODS 
 let saveSessionToDatabase = (user, refreshToken) => {
     // Save session to database
     return new Promise((resolve, reject) => {
@@ -184,6 +186,8 @@ let generateRefreshTokenExpiryTime = () => {
     let secondsUntilExpire = ((daysUntilExpire * 24) * 60) * 60;
     return ((Date.now() / 1000) + secondsUntilExpire);
 }
+*/
+
 
 const User = mongoose.model('User', UserSchema);
 

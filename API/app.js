@@ -4,6 +4,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 const multer = require('multer');
+const https = require('https');
+const path = require('path');
+const fs = require('fs');
 
 // MULTER ATTACHMENTS
 const storage = multer.diskStorage({
@@ -24,6 +27,26 @@ app.use('/uploads', express.static('uploads'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+
+/* AUTH MIDDLEWARE
+// FOR LATER 
+
+let authenticate = (req, res, next) => {
+    let token = req.header('x-access-token');
+
+    // verify the JWT
+    jwt.verify(token, User.getJWTSecret(), (err, decoded) => {
+        if (err) {
+            // there was an error
+            // jwt is invalid - * DO NOT AUTHENTICATE *
+            res.status(401).send(err);
+        } else {
+            // jwt is valid
+            req.user_id = decoded._id;
+            next();
+        }
+    });
+}
 
 // VERIFY REFRESH TOKEN MIDDLEWARE
 let verifySession = (req, res, next) => {
@@ -75,6 +98,7 @@ let verifySession = (req, res, next) => {
         res.status(401).send(e);
     })
 }
+*/
 
 
 // END MIDDLEWARE
@@ -103,7 +127,7 @@ app.get('/ticket/ticketlist', (req, res) => {
 
 
 /* CREATE */
-app.post('/ticket/ticketlist', upload.single('image'), (req, res) => {
+app.post('/ticket/ticketlist', upload.single('image'), /*authenticate,*/ (req, res) => {
 	const email = req.body.email;
     const subject = req.body.subject;
     const description = req.body.description;
@@ -144,7 +168,7 @@ app.delete('/ticket/ticketlist/:id', (req, res) => {
         .catch(err => res.status(400).json('error: ' + err));
 });
 
-/* USER ROUTES */
+/* USER ROUTES 
 app.post('/users', (req, res) => {
     // User sign up
 
@@ -205,8 +229,17 @@ app.get('/users/me/access-token', verifySession, (req, res) => {
         res.status(400).send(e);
     });
 })
+*/
 
-/* LISTEN */
+/* LISTEN
 app.listen(port, () => {
     console.log(`server is listening on port: ${port}`);
-});
+}); 
+*/
+
+const sslServer = https.createServer({
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
+}, app) 
+
+sslServer.listen(port, () => console.log(`HTTPS Server on port: ${port}`))
