@@ -140,6 +140,10 @@ UserSchema.statics.hasRefreshTokenExpired = (expiresAt) => {
 }
 */
 
+UserSchema.statics.getJWTSecret = () => {
+    return jwtSecret;
+}
+
 
 /* MIDDLEWARE 
 // Before a user document is saved, this code runs

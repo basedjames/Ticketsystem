@@ -104,22 +104,45 @@ let verifySession = (req, res, next) => {
 // END MIDDLEWARE
 
 /* CORS HEADERS MIDDLEWARE */
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token, x-refresh-token, _id");
+
+    res.header(
+        'Access-Control-Expose-Headers',
+        'x-access-token, x-refresh-token'
+    );
+
     next();
-  });
+});
+
+let authenticate = (req, res, next) => {
+    let token = req.header('x-access-token');
+    
+    jwt.verify(token, User.getJWTSecret(), (err, decoded) => {
+        if (err) {
+            res.status(401).send(err);
+        } else {
+            req.user_id = decoded._id;
+            next();
+        }
+    })
+}
 
 // LOAD DATABASE
 const { mongoose } = require('./database/mongoose');
 const { Ticket } = require('./database/models/ticket.model');
-const { User } = require('./database/models/user.model')
+const { User } = require('./database/models/user.model');
+
 
 /* ROUTES */
 
 /* READ ALL */
-app.get('/ticket/ticketlist', (req, res) => {
-	Ticket.find()
+app.get('/ticket/ticketlist',authenticate , (req, res) => {
+	Ticket.find({
+        _userId: req.user_id
+    })
     .select('email subject description image')
 	.then(tickets => res.json(tickets))
 	.catch(err => res.status(400).json('Error: ' + err));
@@ -141,6 +164,7 @@ app.post('/ticket/ticketlist', upload.single('image'), /*authenticate,*/ (req, r
     };
 
     const newTicket = new Ticket({
+        _userId: req.user._id,
         email,
         subject,
    	    description,
@@ -155,17 +179,25 @@ app.post('/ticket/ticketlist', upload.single('image'), /*authenticate,*/ (req, r
 
 /* READ */
 app.get('/ticket/ticketlist/:id', (req, res) => {
-    Ticket.findById(req.params.id)
+    Ticket.findById({
+        _userId: req.params._userId,
+        _id: req.params.id
+    })
         .select('email subject description image')
         .then(ticket => res.json(ticket))
         .catch(err => res.status(400).json('error: ' + err));
 });
 
 /* DELETE */
-app.delete('/ticket/ticketlist/:id', (req, res) => {
-    Ticket.findByIdAndDelete(req.params.id)
+app.delete('/ticket/ticketlist/:id', authenticate, (req, res) => {
+    Ticket.findOneAndDelete({
+        _id: req.params.id,
+        _userId: req.user_id
+    })
         .then(ticket => res.json('ticket deleted.'))
         .catch(err => res.status(400).json('error: ' + err));
+    deleteTicketsfromList(_id);
+
 });
 
 /* USER ROUTES 
@@ -232,6 +264,15 @@ app.get('/users/me/access-token', verifySession, (req, res) => {
 */
 
 /* LISTEN
+/* HELPER METHODS */
+
+let deleteTicketsfromList = (_id) => {
+    Ticket.deleteMany({
+        _id
+    });
+}
+
+/* LISTEN 
 app.listen(port, () => {
     console.log(`server is listening on port: ${port}`);
 }); 
